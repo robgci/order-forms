@@ -42,3 +42,7 @@ Fill in `templates/Customer-Order-Form-Template.xlsx` and upload it to request a
 ## Sandbox publication status
 
 This repository is still a Node server with a standalone visual review file. It has not been published as an OpenAI Site. Sites publishing tools are not available in this workspace. Publishing this development environment is different from publishing a customer-facing website. A separate Sites project must adapt the request handler to its Workers runtime and securely bind the email secret before public submission works. Keep all live To recipients restricted to rhorowitz@georgecourey.com during testing, with no Cc/Bcc. The downloadable review is explicitly preview-only and sends no email.
+
+## Netlify test-submission backend
+
+See NETLIFY.md for the current deployment path. `npm run build` now builds the test-submission frontend and `netlify/functions/orders.mjs` handles /api/orders. It is strictly locked to rhorowitz@georgecourey.com with no Cc/Bcc. Netlify requires its own secure RESEND_API_KEY runtime setting. Netlify Drop alone still publishes only a preview and cannot enable this function. The application must be deployed with its Git-connected build or a supported functions deployment. The server validation is shared in order.js. `npm run build:review` retains the no-email offline review. Earlier notes about a static-only Netlify configuration are superseded by NETLIFY.md.

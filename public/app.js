@@ -21,7 +21,7 @@ function update(){
   const input=inputs.get(row.dataset.id);
   const unit=Number(row.dataset.piecesPerUnit)===12?'dozen':'pieces';
   const raw=Number(input.value || 0);
-  const error=!Number.isSafeInteger(raw) || raw<0 || quantity>Number(input.max || 100000) ? 'Enter a whole-number quantity within the allowed range.' : '';
+  const error=!Number.isSafeInteger(raw) || raw<0 || quantity>Number(input.max || 999999) ? 'Enter a whole-number quantity within the allowed range.' : '';
   input.setCustomValidity(error);
   if(error){output.textContent=error;continue;}
   const packing=calculatePackaging(quantity,{
@@ -47,7 +47,7 @@ for(const row of rows){
  quantity.addEventListener('input',()=>{row.dataset.requestedQuantity=quantity.value;checkbox.checked=Number(quantity.value)>0;update();});
  quantity.addEventListener('change',()=>{
   const raw=Number(quantity.value || 0);
-  if(Number.isSafeInteger(raw) && raw>=0 && raw<=Number(quantity.max || 100000))quantity.value=String(roundToWholeCases(raw,packConfig(row)));
+  if(Number.isSafeInteger(raw) && raw>=0 && raw<=Number(quantity.max || 999999))quantity.value=String(roundToWholeCases(raw,packConfig(row)));
   update();
  });
  checkbox.addEventListener('change',()=>{

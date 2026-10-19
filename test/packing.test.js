@@ -44,3 +44,18 @@ test('server rounds quantities up to full cases for every product and accepts pa
   assert.equal(order.lines[0].pallets,1/p.casesPerPallet);
  }
 });
+
+test('all products accept six-digit quantities while preserving full-case rounding',()=>{
+ const base={po:'SIX-DIGIT-TEST',contactId:'saul-aguilera',deliveryDate:'2099-11-15'};
+ for(const p of products){
+  const line=validateOrder({...base,quantities:{[p.id]:123456}}).lines[0];
+  assert.equal(line.quantity,roundToWholeCases(123456,p));
+  assert.ok(line.quantity>=123456 && line.quantity<=999999);
+  assert.ok(Number.isInteger(line.cases));
+  const unitsPerCase=p.piecesPerCase/p.piecesPerUnit;
+  const maximum=Math.floor(999999/unitsPerCase)*unitsPerCase;
+  assert.equal(validateOrder({...base,quantities:{[p.id]:maximum}}).lines[0].quantity,maximum);
+  assert.throws(()=>validateOrder({...base,quantities:{[p.id]:1000000}}),/999,999/);
+  assert.throws(()=>validateOrder({...base,quantities:{[p.id]:999999}}),/maximum order quantity/);
+ }
+});

@@ -29,6 +29,8 @@ test('product selection and quantities calculate totals together',async()=>{
   assert.equal(checkbox.checked,false);
   quantity.value='960';quantity.handlers.input();
   assert.equal(packing.textContent,'Cases: 16 · Pallets: 1');assert.equal(quantity.validationMessage,'');
+  quantity.value='123456';quantity.handlers.input();quantity.handlers.change();
+  assert.equal(quantity.value,'123480');assert.equal(quantity.validationMessage,'');
   checkbox.checked=false;checkbox.handlers.change();
   assert.equal(packing.textContent,'Cases: 0 · Pallets: 0');
   elements.order.dataset.preview='true';
