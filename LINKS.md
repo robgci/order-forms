@@ -9,9 +9,10 @@ an interim reference and does not establish a Sites sidebar entry.
 - Netlify account dashboard: https://app.netlify.com/ — open project `statuesque-gnome-ee68e9`.
 - Repository connection/build settings: see [NETLIFY.md](NETLIFY.md).
 
-Status: the existing Netlify upload is review-only. The GitHub automation commit
-is prepared locally. A push was blocked pending explicit approval to upload the
-repository's customer contact emails, product information and pricing. Netlify's
-GitHub authorization and repository connection have not been completed.
+Status: the working test-submission code has been pushed to GitHub main with
+explicit approval to upload customer contacts, products and pricing. API keys are
+excluded. Netlify's GitHub repository connection, runtime email settings and
+function deployment still need confirmation. The existing manual upload remains
+preview-only until that deployment completes.
 
 Shipment Desk is a separate project and must remain unchanged.
