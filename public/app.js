@@ -6,7 +6,7 @@ function submissionKey(){
  return Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');
 }
 let key=submissionKey();
-const money=value=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(value);
+const money=value=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',useGrouping:true}).format(value);
 const rows=[...document.querySelectorAll('.product')];
 const inputs=new Map(rows.map(row=>[row.dataset.id,row.querySelector('.quantity')]));
 function packConfig(row){return {piecesPerUnit:Number(row.dataset.piecesPerUnit),piecesPerCase:Number(row.dataset.piecesPerCase),casesPerPallet:Number(row.dataset.casesPerPallet)};}

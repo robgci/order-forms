@@ -1,7 +1,7 @@
 import {formatPackCount} from './public/packing.js';
 
 const escape=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const money=cents=>`$${(cents/100).toFixed(2)}`;
+const money=cents=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',useGrouping:true}).format(cents/100);
 const count=value=>Number(value).toLocaleString('en-US');
 const productTitle=p=>p.name.split(' - ')[0].replace(/^1 lb wash Cloth$/,'Wash Cloth');
 

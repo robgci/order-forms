@@ -8,6 +8,10 @@
 .pallet-total{padding-bottom:0}.pallet-total+ .total{padding-top:12px}
 
 .location-help{font-size:11px;line-height:1.5;color:#707787;margin:-22px 0 0 204px}@media(max-width:600px){.location-help{margin:-16px 0 0}}
+
+/* Keep numeric validation and the mobile keypad without spinner controls. */
+.quantity{-moz-appearance:textfield;appearance:textfield}
+.quantity::-webkit-inner-spin-button,.quantity::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 </style></head>
 <body>
 <header class="brand-header"><div class="brand">George Courey<span> Inc.</span></div><p>Hospitality and Healthcare Linen Specialist</p></header>
@@ -76,7 +80,7 @@ function submissionKey(){
  return Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');
 }
 let key=submissionKey();
-const money=value=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(value);
+const money=value=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',useGrouping:true}).format(value);
 const rows=[...document.querySelectorAll('.product')];
 const inputs=new Map(rows.map(row=>[row.dataset.id,row.querySelector('.quantity')]));
 function packConfig(row){return {piecesPerUnit:Number(row.dataset.piecesPerUnit),piecesPerCase:Number(row.dataset.piecesPerCase),casesPerPallet:Number(row.dataset.casesPerPallet)};}

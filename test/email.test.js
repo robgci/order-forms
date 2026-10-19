@@ -21,3 +21,12 @@ test('email escapes user-supplied markup and excludes unordered products',()=>{
  assert.match(email.html,/&lt;reference&gt;/);
  assert.match(email.html,/>60<\/td>/);
 });
+
+test('large dollar amounts use commas in HTML and plain-text confirmations',()=>{
+ const order=validateOrder({po:'LARGE-TOTAL',contactId:'saul-aguilera',deliveryDate:'2099-11-15',quantities:{'L8-68383':600}});
+ const email=renderOrderEmail(customer,order,'large-total');
+ assert.ok(email.html.includes('Line total: <strong>$2,496.00</strong>'));
+ assert.ok(email.html.includes('$2,496.00'));
+ assert.match(email.text,/Line total: \$2,496\.00/);
+ assert.match(email.text,/Total: \$2,496\.00/);
+});
