@@ -5,6 +5,9 @@ import {renderOrderEmail} from '../../order-email.js';
 const TEST_RECIPIENT='rhorowitz@georgecourey.com';
 
 export function createOrderHandler({apiKey=process.env.RESEND_API_KEY,from=process.env.ORDER_FROM_EMAIL || 'onboarding@resend.dev',recipientSetting=process.env.TEST_ORDER_EMAIL,fetchEmail=fetch}={}) {
+  apiKey=apiKey?.trim();
+  from=from?.trim();
+  recipientSetting=recipientSetting?.trim().toLowerCase();
   // Best-effort per-instance throttling. Resend idempotency also protects retries
   // that reach another function instance. No email recipients come from inputs.
   const attempts=new Map();
@@ -30,7 +33,11 @@ export function createOrderHandler({apiKey=process.env.RESEND_API_KEY,from=proce
     }catch{return reply(400,{error:'Unable to read this order. Please reload and try again.'});}
     let order;
     try{order=validateOrder(body);}catch(error){return reply(400,{error:error.message});}
-    if(!apiKey || !from || (recipientSetting && recipientSetting!==TEST_RECIPIENT))return reply(503,{error:'Test email settings are incomplete. Your order has not been sent. Please contact Robert Horowitz.'});
+    const settingsErrors=[];
+    if(!apiKey)settingsErrors.push('RESEND_API_KEY has no value available to the Netlify function. Save its Production value with Functions scope, then redeploy.');
+    if(!from)settingsErrors.push('ORDER_FROM_EMAIL is empty. Set it to onboarding@resend.dev, then redeploy.');
+    if(recipientSetting && recipientSetting!==TEST_RECIPIENT)settingsErrors.push('TEST_ORDER_EMAIL must be rhorowitz@georgecourey.com. Correct its Production value, then redeploy.');
+    if(settingsErrors.length)return reply(503,{error:`Your order has not been sent. ${settingsErrors.join(' ')}`});
     const key=request.headers.get('idempotency-key');
     if(!key || !/^[a-zA-Z0-9-]{16,80}$/.test(key))return reply(400,{error:'Please reload the form before submitting.'});
     const fingerprint=JSON.stringify(order);

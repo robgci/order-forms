@@ -35,6 +35,26 @@ test('Netlify handler never sends with missing credentials, wrong recipient sett
  assert.equal(sent,0);
 });
 
+test('configuration errors identify only the setting name and never expose secret values',async()=>{
+ const response=await createOrderHandler({apiKey:' ',recipientSetting:'rhorowitz@georgecourey.com'})(request());
+ assert.equal(response.status,503);
+ assert.match((await response.json()).error,/RESEND_API_KEY has no value.*Production.*Functions scope/);
+ const mismatch=await createOrderHandler({apiKey:'test-private-value',recipientSetting:'wrong@example.com'})(request());
+ const message=(await mismatch.json()).error;
+ assert.match(message,/TEST_ORDER_EMAIL must be/);
+ assert.doesNotMatch(message,/test-private-value|wrong@example.com/);
+});
+
+test('accidental whitespace and recipient capitalization do not block approved test delivery',async()=>{
+ const sent=[];
+ const handler=createOrderHandler({apiKey:' test-private-value \n',from:' onboarding@resend.dev ',recipientSetting:' RHOROWITZ@GEORGECOUREY.COM \n',fetchEmail:async(url,options)=>{sent.push(options);return new Response('{}');}});
+ assert.equal((await handler(request())).status,200);
+ assert.equal(sent[0].headers.Authorization,'Bearer test-private-value');
+ const message=JSON.parse(sent[0].body);
+ assert.equal(message.from,'onboarding@resend.dev');
+ assert.deepEqual(message.to,['rhorowitz@georgecourey.com']);
+});
+
 test('Netlify handler reports provider failures and retries with stable idempotency payload',async()=>{
  const sent=[];
  const handler=createOrderHandler({apiKey:'test',recipientSetting:'rhorowitz@georgecourey.com',fetchEmail:async(url,options)=>{sent.push(options);return new Response('{}',{status:sent.length===1?503:200});}});
