@@ -1,0 +1,72 @@
+{
+  "slug": "handcraft",
+  "name": "Handcraft Linen Service",
+  "contact": "Saul Aguilera",
+  "email": "saulaguilera@handcraftservices.com",
+  "salesRep": "Robert Horowitz",
+  "salesEmail": "rhorowitz@georgecourey.com",
+  "vendor": "George Courey Inc",
+  "locations": [
+    "Richmond VA Bulk",
+    "Martinsburg WV Bulk",
+    "High Point NC Bulk"
+  ],
+  "products": [
+    {
+      "id": "L8-68383",
+      "name": "Universal Gown - 55% Cotton, 45% Polyester - Print",
+      "unit": "each",
+      "price": 4.16,
+      "casesPerPallet": 16,
+      "piecesPerCase": 60,
+      "piecesPerUnit": 1
+    },
+    {
+      "id": "L1216-170",
+      "name": "Flannel Blanket - Loomstate Unbleached - 60% cotton, 40% polyester - 72\" x 90\" - 1.70 lbs - Green ID Thread",
+      "unit": "each",
+      "price": 2.59,
+      "casesPerPallet": 16,
+      "piecesPerCase": 30,
+      "piecesPerUnit": 1
+    },
+    {
+      "id": "c1070-5481",
+      "name": "Drawsheet - 54\" x 81\" - 55% cotton, 45% polyester- T180 - White with Blue ID Thread",
+      "unit": "ea",
+      "price": 2.4,
+      "casesPerPallet": 30,
+      "piecesPerCase": 36,
+      "piecesPerUnit": 1
+    },
+    {
+      "id": "L8870_U",
+      "name": "1 lb wash Cloth",
+      "unit": "dz",
+      "price": 1.74,
+      "casesPerPallet": 8,
+      "piecesPerCase": 900,
+      "piecesPerUnit": 12
+    }
+  ],
+  "contacts": [
+    {
+      "id": "saul-aguilera",
+      "name": "Saul Aguilera",
+      "email": "saulaguilera@handcraftservices.com",
+      "location": "Richmond VA Bulk"
+    },
+    {
+      "id": "ringo-tetteh-quaye",
+      "name": "Ringo Tetteh Quaye",
+      "email": "RingoTettehQuaye@handcraftservices.com",
+      "location": "Martinsburg WV Bulk"
+    },
+    {
+      "id": "clinton-wright",
+      "name": "Clinton Wright",
+      "email": "clintonwright@handcraftservices.com",
+      "location": "High Point NC Bulk"
+    }
+  ]
+}

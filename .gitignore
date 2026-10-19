@@ -1,0 +1,10 @@
+.env
+node_modules/
+*.log
+.env.*
+!.env.example
+/dist/
+/.netlify/
+/review/*.png
+/sandbox-review/
+__pycache__/
