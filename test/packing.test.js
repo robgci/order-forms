@@ -14,10 +14,10 @@ test('every product calculates exact cases and pallets from its selling unit',()
  }
 });
 test('washcloths use 75 dozen per case and 600 dozen per pallet without changing price',()=>{
- const p=products.find(p=>p.id==='L8870_U');
+ const p=products.find(p=>p.id==='L8870-U');
  assert.equal(calculatePackaging(75,p).pieces,900);
  assert.deepEqual(calculatePackaging(600,p),{pieces:7200,cases:8,pallets:1});
- const order=validateOrder({po:'TEST',contactId:'saul-aguilera',shipTo:'Richmond VA Bulk',deliveryDate:'2099-11-15',quantities:{L8870_U:600}});
+ const order=validateOrder({po:'TEST',contactId:'saul-aguilera',shipTo:'Richmond VA Bulk',deliveryDate:'2099-11-15',quantities:{'L8870-U':600}});
  assert.equal(order.lines[0].totalCents,104400);
  assert.equal(order.lines[0].cases,8);
  assert.equal(order.lines[0].pallets,1);

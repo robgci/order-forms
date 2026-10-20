@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {createServer,validateOrder} from '../server.js';
-const order={po:'PO-1042',contactId:'saul-aguilera',shipTo:'Richmond VA Bulk',deliveryDate:'2099-11-15',quantities:{'L8-68383':60,'L8870_U':75}};
+const order={po:'PO-1042',contactId:'saul-aguilera',shipTo:'Richmond VA Bulk',deliveryDate:'2099-11-15',quantities:{'L8-68383':60,'L8870-U':75}};
 test('validates quantities, dates, locations and authoritative product prices',()=>{
  const result=validateOrder(order);
  assert.equal(result.lines.length,2);
@@ -15,7 +15,7 @@ test('serves form and submits only to test recipient; repeated submit is dedupli
  await run({apiKey:'test-only',from:'orders@example.com',testRecipient:'tester@example.com',sendEmail:async m=>sent.push(m)},async url=>{
   const page=await(await fetch(`${url}/handcraft`)).text();
   assert.match(page,/Submit order/);
-  for(const sku of ['L8-68383','L1216-170','c1070-5481','L8870_U'])assert.ok(page.includes(sku));
+  for(const sku of ['L8-68383','L1216-170','c1070-5481','L8870-U'])assert.ok(page.includes(sku));
   assert.match(page,/Universal Gown/);
   assert.match(page,/Flannel Blanket/);
   assert.match(page,/Drawsheet/);

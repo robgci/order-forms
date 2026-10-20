@@ -5,7 +5,7 @@ let html=await read('public/index.html');
 const customerLogo=await readFile(new URL('public/assets/handcraft-logo.svg',root));
 html=html.replace('src="assets/handcraft-logo.svg"',`src="data:image/svg+xml;base64,${customerLogo.toString('base64')}"`);
 html=html.replace('<form id="order">','<form id="order" data-preview="true">');
-html=html.replace('Testing only — emails go to Robert Horowitz.<br>No email is sent to the customer.','Preview only — submitting checks the form without sending an order or email.');
+html=html.replace('Your order will be reviewed by Robert Horowitz.','Preview only — submitting checks the form without sending an order or email.');
 html=html.replace('<link rel="stylesheet" href="style.css">',`<style>${await read('public/style.css')}</style>`);
 html=html.replace('<script type="module" src="app.js"></script>','');
 const packing=(await read('public/packing.js')).replaceAll('export function','function');
