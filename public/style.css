@@ -11,3 +11,5 @@
 /* Keep numeric validation and the mobile keypad without spinner controls. */
 .quantity{-moz-appearance:textfield;appearance:textfield}
 .quantity::-webkit-inner-spin-button,.quantity::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+
+.customer-heading{display:flex;justify-content:center}.customer-logo{display:block;width:217px;max-width:100%;height:auto}

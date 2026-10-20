@@ -67,9 +67,9 @@ export function createServer({sendEmail, apiKey=process.env.RESEND_API_KEY, from
         }
       } catch {return reply(500,{error:'Unable to process this order. Please try again.'});}
     }
-    const files={'/':'index.html','/handcraft':'index.html','/app.js':'app.js','/packing.js':'packing.js','/style.css':'style.css'};
+    const files={'/':'index.html','/handcraft':'index.html','/app.js':'app.js','/packing.js':'packing.js','/style.css':'style.css','/assets/handcraft-logo.svg':'assets/handcraft-logo.svg'};
     if(req.method==='GET' && files[path]) {
-      res.writeHead(200,{'Content-Type':path.endsWith('.js')?'text/javascript':path.endsWith('.css')?'text/css':'text/html','Cache-Control':'no-store'});
+      res.writeHead(200,{'Content-Type':path.endsWith('.js')?'text/javascript':path.endsWith('.css')?'text/css':path.endsWith('.svg')?'image/svg+xml':'text/html','Cache-Control':'no-store'});
       return res.end(await readFile(new URL(`public/${files[path]}`,root)));
     }
     reply(404,{error:'Not found'});
