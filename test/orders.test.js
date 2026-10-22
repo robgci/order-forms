@@ -27,7 +27,7 @@ test('serves form and submits only to test recipient; repeated submit is dedupli
   const result=await response.json();assert.ok(result.id);
   assert.deepEqual((await(await post(url)).json()),result);assert.equal(sent.length,1);
   assert.deepEqual(sent[0].to,['tester@example.com']);
-  assert.match(sent[0].subject,/^\[TEST\]/);
+  assert.equal(sent[0].subject,'Order request — Handcraft Linen Service');
   assert.match(sent[0].html,/Handcraft Order Confirmation/);
   assert.match(sent[0].html,/Total pallets/);
   assert.match(sent[0].html,/\$380.10/);
