@@ -53,11 +53,11 @@ export function createOrderHandler({apiKey=process.env.RESEND_API_KEY,from=proce
     try{
       const response=await fetchEmail('https://api.resend.com/emails',{
         method:'POST',headers:{Authorization:`Bearer ${apiKey}`,'Content-Type':'application/json','Idempotency-Key':key},
-        body:JSON.stringify({from,to:[TEST_RECIPIENT],subject:`[TEST] Order request — ${customer.name}`,html,text}),
+        body:JSON.stringify({from,to:[TEST_RECIPIENT],subject:`Order request — ${customer.name}`,html,text}),
         signal:AbortSignal.timeout(15000)
       });
       if(!response.ok)throw Error('Provider failure');
-      entry.result={id,message:'Test order sent to Robert Horowitz only. No email was sent to the customer.'};
+      entry.result={id,message:'Order sent to Robert Horowitz.'};
       return reply(200,entry.result);
     }catch{
       submissions.delete(key);
