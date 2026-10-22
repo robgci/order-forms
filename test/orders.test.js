@@ -57,7 +57,9 @@ test('each contact resolves trusted location/email and test notifications remain
  const contacts=[
   ['saul-aguilera','Saul Aguilera','saulaguilera@handcraftservices.com','Richmond VA Bulk'],
   ['ringo-tetteh-quaye','Ringo Tetteh Quaye','RingoTettehQuaye@handcraftservices.com','Martinsburg WV Bulk'],
-  ['clinton-wright','Clinton Wright','clintonwright@handcraftservices.com','High Point NC Bulk']
+  ['clinton-wright','Clinton Wright','clintonwright@handcraftservices.com','High Point NC Bulk'],
+  ['eric-henard','Eric Henard','erichenard@handcraftservices.com','2828 coffer VA retail'],
+  ['sonia-amezquita','Sonia Amezquita','soniaamezquita@handcraftservices.com','Wilson, NC retail']
  ];
  const sent=[];
  await run({apiKey:'test',from:'orders@example.com',testRecipient:'tester@example.com',sendEmail:async message=>sent.push(message)},async url=>{
@@ -75,7 +77,7 @@ test('each contact resolves trusted location/email and test notifications remain
    assert.ok(sent[i].text.includes(`Contact: ${name}`));
   }
   const catalog=await(await fetch(`${url}/api/customer`)).json();
-  assert.equal(catalog.contacts.length,3);
+  assert.equal(catalog.contacts.length,5);
   for(const contact of catalog.contacts)assert.equal(contact.email,undefined);
  });
  assert.throws(()=>validateOrder({...order,contactId:'unknown'}),/contact person/);
