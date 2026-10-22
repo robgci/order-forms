@@ -5,7 +5,7 @@ const money=cents=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD
 const count=value=>Number(value).toLocaleString('en-US');
 const productTitle=p=>p.name.split(' - ')[0].replace(/^1 lb wash Cloth$/,'Wash Cloth');
 
-export function renderOrderEmail(customer,order,id,{testMode=true}={}) {
+export function renderOrderEmail(customer,order,id) {
   const totalCents=order.lines.reduce((sum,p)=>sum+p.totalCents,0);
   const totalPallets=order.lines.reduce((sum,p)=>sum+p.pallets,0);
   const date=new Intl.DateTimeFormat('en-US',{month:'long',day:'numeric',year:'numeric',timeZone:'UTC'}).format(new Date(`${order.deliveryDate}T12:00:00Z`));
@@ -33,7 +33,6 @@ export function renderOrderEmail(customer,order,id,{testMode=true}={}) {
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr><td style="padding:30px 28px;border-bottom:1px solid #dce0e8;">
   <h1 style="margin:0;font-size:26px;line-height:1.4;font-weight:600;color:#303747;">${escape(customer.name.replace(/ Linen Service$/,''))} Order Confirmation</h1>
   <p style="margin:10px 0 0;font-size:13px;color:#707787;">PO: <strong>${escape(order.po)}</strong></p>
-  ${testMode?'<p style="margin:12px 0 0;font-size:12px;color:#805415;">TEST ORDER &mdash; sent only to the test recipient. No customer email was sent.</p>':''}
   </td></tr><tr><td style="padding:8px 28px 0;">
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0">${products}</table>
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-top:20px;">
@@ -44,6 +43,6 @@ export function renderOrderEmail(customer,order,id,{testMode=true}={}) {
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0">${detail('Customer name',customer.name)}${detail('Contact',order.contact.name)}${detail('Ship to',order.shipTo)}${detail('PO number',order.po)}${detail('Delivery date',date)}${detail('Salesperson',customer.salesRep)}</table>
   </td></tr><tr><td style="padding:20px 28px;border-top:1px solid #dce0e8;font-size:11px;line-height:1.6;color:#737b8b;">Order reference: ${escape(id)}</td></tr></table>
   </td></tr></table></td></tr></table></body></html>`;
-  const text=[testMode?'TEST ORDER — No customer email was sent.':'Order confirmation',customer.name,`PO: ${order.po}`,'',...order.lines.map(p=>`${p.id} — ${p.name}\nQuantity: ${p.quantity} ${p.piecesPerUnit===12?'dozen':'pieces'} | Cases: ${formatPackCount(p.cases)} | Pallets: ${formatPackCount(p.pallets)}\nLine total: ${money(p.totalCents)}`),'',`Total pallets: ${formatPackCount(totalPallets)}`,`Total: ${money(totalCents)}`,'',`Contact: ${order.contact.name}`,`Ship to: ${order.shipTo}`,`Requested delivery: ${date}`,`Salesperson: ${customer.salesRep}`,`Order reference: ${id}`,'Shipping and tax are not included. Requested delivery dates are subject to confirmation.'].join('\n');
+  const text=['Order confirmation',customer.name,`PO: ${order.po}`,'',...order.lines.map(p=>`${p.id} — ${p.name}\nQuantity: ${p.quantity} ${p.piecesPerUnit===12?'dozen':'pieces'} | Cases: ${formatPackCount(p.cases)} | Pallets: ${formatPackCount(p.pallets)}\nLine total: ${money(p.totalCents)}`),'',`Total pallets: ${formatPackCount(totalPallets)}`,`Total: ${money(totalCents)}`,'',`Contact: ${order.contact.name}`,`Ship to: ${order.shipTo}`,`Requested delivery: ${date}`,`Salesperson: ${customer.salesRep}`,`Order reference: ${id}`,'Shipping and tax are not included. Requested delivery dates are subject to confirmation.'].join('\n');
   return {html,text};
 }
