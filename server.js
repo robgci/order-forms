@@ -58,8 +58,8 @@ export function createServer({sendEmail, apiKey=process.env.RESEND_API_KEY, from
         const id=createHash('sha256').update(key).digest('hex').slice(0,16);
         const {html,text}=renderOrderEmail(customer,order,id);
         try {
-          await deliver({from,to:[testRecipient],subject:`[TEST] Order request — ${customer.name}`,html,text}, key);
-          entry.result={id,message:'Test order sent to the configured test recipient only. No email was sent to the customer.'};
+          await deliver({from,to:[testRecipient],subject:`Order request — ${customer.name}`,html,text}, key);
+          entry.result={id,message:'Order sent to Robert Horowitz.'};
           return reply(200,entry.result);
         } catch {
           submissions.delete(key);
