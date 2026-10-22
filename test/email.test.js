@@ -7,7 +7,9 @@ const customer=JSON.parse(await readFile(new URL('../data/handcraft.json',import
 test('formatted confirmation includes ordered products, selling units, packing, totals and delivery fields',()=>{
  const order=validateOrder({po:'FORMAT-TEST',contactId:'saul-aguilera',shipTo:'Richmond VA Bulk',deliveryDate:'2099-11-15',quantities:{'L8-68383':60,'L1216-170':30,'c1070-5481':36,'L8870-U':75}});
  const email=renderOrderEmail(customer,order,'reference-123');
- for(const value of ['George Courey','Handcraft Order Confirmation','L8-68383','L1216-170','c1070-5481','L8870-U','Quantity (Dozen)','Quantity (Pieces)','Total pallets','0.283','$544.20','FORMAT-TEST','November 15, 2099','Robert Horowitz','TEST ORDER'])assert.ok(email.html.includes(value),value);
+ assert.doesNotMatch(email.html,/TEST ORDER|test recipient/);
+ assert.doesNotMatch(email.text,/TEST ORDER|test recipient/);
+ for(const value of ['George Courey','Handcraft Order Confirmation','L8-68383','L1216-170','c1070-5481','L8870-U','Quantity (Dozen)','Quantity (Pieces)','Total pallets','0.283','$544.20','FORMAT-TEST','November 15, 2099','Robert Horowitz'])assert.ok(email.html.includes(value),value);
  assert.match(email.html,/background-color:#f3f2ff/);
  assert.match(email.text,/Total pallets: 0.283/);
  assert.match(email.text,/Total: \$544.20/);
