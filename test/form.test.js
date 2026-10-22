@@ -15,7 +15,7 @@ test('product selection and quantities calculate totals together',async()=>{
   const context=vm.createContext({calculatePackaging,formatPackCount,roundToWholeCases,crypto:webcrypto,Intl,Date,Uint8Array,document:{getElementById:id=>elements[id],querySelectorAll:()=>[row]}});
   vm.runInContext((await readFile(new URL('../public/app.js',import.meta.url),'utf8')).replace(/^import .*;\n/,''),context);
   assert.equal(elements.shipTo.value,'Richmond VA Bulk');
-  for(const location of ['Martinsburg WV Bulk','High Point NC Bulk','Richmond VA Bulk']){
+  for(const location of ['Martinsburg WV Bulk','High Point NC Bulk','2828 coffer VA retail','Wilson, NC retail','Richmond VA Bulk']){
     elements.contact.selectedOptions=[{dataset:{location}}];elements.contact.handlers.change();
     assert.equal(elements.shipTo.value,location);
   }
