@@ -15,6 +15,8 @@ test('Netlify handler sends a formatted whole-case order only to Robert and dedu
  assert.equal(sent.length,1);
  const message=JSON.parse(sent[0].body);
  assert.deepEqual(message.to,['rhorowitz@georgecourey.com']);
+ assert.equal(message.subject,'Order request — Handcraft Linen Service');
+ assert.doesNotMatch(message.html,/TEST ORDER|test recipient/);
  assert.equal(message.cc,undefined);assert.equal(message.bcc,undefined);
  assert.match(message.html,/Ringo Tetteh Quaye/);assert.match(message.html,/Martinsburg WV Bulk/);
  assert.match(message.html,/>120<\/td>/);assert.match(message.html,/\$499.20/);
@@ -53,6 +55,8 @@ test('accidental whitespace and recipient capitalization do not block approved t
  const message=JSON.parse(sent[0].body);
  assert.equal(message.from,'onboarding@resend.dev');
  assert.deepEqual(message.to,['rhorowitz@georgecourey.com']);
+ assert.equal(message.subject,'Order request — Handcraft Linen Service');
+ assert.doesNotMatch(message.html,/TEST ORDER|test recipient/);
 });
 
 test('Netlify handler reports provider failures and retries with stable idempotency payload',async()=>{
