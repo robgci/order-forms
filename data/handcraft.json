@@ -9,7 +9,9 @@
   "locations": [
     "Richmond VA Bulk",
     "Martinsburg WV Bulk",
-    "High Point NC Bulk"
+    "High Point NC Bulk",
+    "2828 coffer VA retail",
+    "Wilson, NC retail"
   ],
   "products": [
     {
@@ -67,6 +69,18 @@
       "name": "Clinton Wright",
       "email": "clintonwright@handcraftservices.com",
       "location": "High Point NC Bulk"
+    },
+    {
+      "id": "eric-henard",
+      "name": "Eric Henard",
+      "email": "erichenard@handcraftservices.com",
+      "location": "2828 coffer VA retail"
+    },
+    {
+      "id": "sonia-amezquita",
+      "name": "Sonia Amezquita",
+      "email": "soniaamezquita@handcraftservices.com",
+      "location": "Wilson, NC retail"
     }
   ]
 }
